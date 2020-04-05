@@ -4,7 +4,7 @@ import "time"
 
 type Order struct {
 	Id             string
-	name           string
-	deliverAddress string
-	deliverTime    time.Time
+	Name           string
+	DeliverAddress string
+	DeliverTime    time.Time
 }
