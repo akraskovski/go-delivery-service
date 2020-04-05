@@ -1,4 +1,4 @@
-package delivery_service
+package api_server
 
 import (
 	"github.com/gorilla/mux"
@@ -8,12 +8,12 @@ import (
 )
 
 type APIServer struct {
-	config *DeliveryServiceConfig
+	config *APIServerConfig
 	logger *logrus.Logger
 	router *mux.Router
 }
 
-func NewAPIServer(config *DeliveryServiceConfig) *APIServer {
+func NewAPIServer(config *APIServerConfig) *APIServer {
 	return &APIServer{
 		config: config,
 		logger: logrus.New(),

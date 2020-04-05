@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/BurntSushi/toml"
-	"github.com/akraskovski/go-delivery-service/internal/app/delivery_service"
+	"github.com/akraskovski/go-delivery-service/internal/app/api_server"
 	"log"
 )
 
@@ -16,13 +16,13 @@ func init() {
 func main() {
 	flag.Parse()
 
-	config := delivery_service.NewDeliveryServiceConfig()
+	config := api_server.NewAPIServerConfig()
 	_, err := toml.DecodeFile(configPath, config)
 	if err != nil {
 		log.Fatal("Cannot read config path from configuration\n", err)
 	}
 
-	apiServer := delivery_service.NewAPIServer(config)
+	apiServer := api_server.NewAPIServer(config)
 	if err := apiServer.Start(); err != nil {
 		log.Fatal("Cannot start API Server\n", err)
 	}

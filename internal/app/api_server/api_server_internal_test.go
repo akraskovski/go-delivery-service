@@ -1,4 +1,4 @@
-package delivery_service
+package api_server
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestAPIServer_HandleHello(t *testing.T) {
-	_ = NewAPIServer(NewDeliveryServiceConfig())
+	_ = NewAPIServer(NewAPIServerConfig())
 	recorder := httptest.NewRecorder()
 	request, _ := http.NewRequest(http.MethodGet, "/hello", nil)
 	handleHello().ServeHTTP(recorder, request)
