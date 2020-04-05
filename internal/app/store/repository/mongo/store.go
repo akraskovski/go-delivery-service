@@ -6,11 +6,11 @@ import (
 )
 
 type Store struct {
-	db              *mongo.Client
+	db              *mongo.Database
 	orderRepository *OrderRepository
 }
 
-func New(db *mongo.Client) *Store {
+func New(db *mongo.Database) *Store {
 	return &Store{
 		db: db,
 	}

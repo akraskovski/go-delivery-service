@@ -1,3 +1,4 @@
 bind_port = ":8000"
 log_level = "info"
 database_url = "mongodb://localhost:27017"
+database_name = "delivery-service"
