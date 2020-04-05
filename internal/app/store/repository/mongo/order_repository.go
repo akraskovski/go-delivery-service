@@ -14,7 +14,7 @@ type OrderRepository struct {
 }
 
 func (repository *OrderRepository) Create(order *model.Order) (*model.Order, error) {
-	if _, err := repository.store.db.Collection(collectionName).InsertOne(context.Background(), order); err != nil {
+	if _, err := repository.store.Collection(collectionName).InsertOne(context.Background(), order); err != nil {
 		log.Fatal(err)
 	}
 	return order, nil
@@ -22,7 +22,7 @@ func (repository *OrderRepository) Create(order *model.Order) (*model.Order, err
 
 func (repository *OrderRepository) FindAll() ([]*model.Order, error) {
 	var results []*model.Order
-	cursor, err := repository.store.db.Collection(collectionName).Find(context.Background(), bson.D{})
+	cursor, err := repository.store.Collection(collectionName).Find(context.Background(), bson.D{})
 	if err != nil {
 		return nil, err
 	}

@@ -6,13 +6,13 @@ import (
 )
 
 type Store struct {
-	db              *mongo.Database
+	*mongo.Database
 	orderRepository *OrderRepository
 }
 
 func New(db *mongo.Database) *Store {
 	return &Store{
-		db: db,
+		Database: db,
 	}
 }
 
