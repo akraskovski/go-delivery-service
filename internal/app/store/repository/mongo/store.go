@@ -2,14 +2,15 @@ package mongo
 
 import (
 	"github.com/akraskovski/go-delivery-service/internal/app/store"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type Store struct {
-	db              *interface{} //todo replace by mongo driver
+	db              *mongo.Client
 	orderRepository *OrderRepository
 }
 
-func New(db *interface{}) *Store {
+func New(db *mongo.Client) *Store {
 	return &Store{
 		db: db,
 	}
