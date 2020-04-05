@@ -29,5 +29,10 @@ func connectToDB(config *APIServerConfig) (*mongo.Database, error) {
 		return nil, err
 	}
 
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+
 	return client.Database(config.DatabaseName), nil
 }
