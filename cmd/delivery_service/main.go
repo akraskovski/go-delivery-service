@@ -22,9 +22,7 @@ func main() {
 		log.Fatal("Cannot read config path from configuration\n", err)
 	}
 
-	apiServer := api_server.NewAPIServer(config)
-	if err := apiServer.Start(); err != nil {
+	if err := api_server.Start(config); err != nil {
 		log.Fatal("Cannot start API Server\n", err)
 	}
-
 }

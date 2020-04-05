@@ -8,7 +8,7 @@ import (
 )
 
 func TestAPIServer_HandleHello(t *testing.T) {
-	_ = NewAPIServer(NewAPIServerConfig())
+	_ = Start(NewAPIServerConfig())
 	recorder := httptest.NewRecorder()
 	request, _ := http.NewRequest(http.MethodGet, "/hello", nil)
 	handleHello().ServeHTTP(recorder, request)
