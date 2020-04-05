@@ -1,12 +1,11 @@
-package repository
+package mongo
 
 import (
 	"github.com/akraskovski/go-delivery-service/internal/app/model"
-	"github.com/akraskovski/go-delivery-service/internal/app/store"
 )
 
 type OrderRepository struct {
-	store *store.Store
+	store *Store
 }
 
 func (repository *OrderRepository) Create(order *model.Order) (*model.Order, error) {

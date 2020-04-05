@@ -1,4 +1,5 @@
 package store
 
-type Store struct {
+type Store interface {
+	Order() OrderRepository
 }

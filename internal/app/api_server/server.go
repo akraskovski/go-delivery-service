@@ -1,6 +1,7 @@
 package api_server
 
 import (
+	"github.com/akraskovski/go-delivery-service/internal/app/store"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 	"io"
@@ -8,29 +9,26 @@ import (
 )
 
 type server struct {
-	config *APIServerConfig
 	router *mux.Router
 	logger *logrus.Logger
+	store  store.Store
 }
 
-func newServer(config *APIServerConfig) (*server, error) {
+func newServer(store store.Store, config *APIServerConfig) *server {
 	server := server{
-		config: config,
 		logger: logrus.New(),
 		router: mux.NewRouter(),
+		store:  store,
 	}
 
-	if err := server.configureLogger(); err != nil {
-		return nil, err
-	}
-
+	server.configureLogger(config)
 	server.configureRouter()
 
-	return &server, nil
+	return &server
 }
 
-func (server *server) configureLogger() (err error) {
-	level, err := logrus.ParseLevel(server.config.LogLevel)
+func (server *server) configureLogger(config *APIServerConfig) (err error) {
+	level, err := logrus.ParseLevel(config.LogLevel)
 	if err != nil {
 		return
 	}
