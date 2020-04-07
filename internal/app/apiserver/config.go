@@ -1,4 +1,4 @@
-package api_server
+package apiserver
 
 type APIServerConfig struct {
 	BindPort     string `toml:"bind_port"`
