@@ -2,8 +2,10 @@ package mongo
 
 import (
 	"context"
+	"fmt"
 	"github.com/akraskovski/go-delivery-service/internal/app/model"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"log"
 )
 
@@ -13,11 +15,18 @@ type OrderRepository struct {
 	store *Store
 }
 
-func (repository *OrderRepository) Create(order *model.Order) (*model.Order, error) {
-	if _, err := repository.store.Collection(collectionName).InsertOne(context.Background(), order); err != nil {
-		log.Fatal(err)
+func (repository *OrderRepository) Create(order *model.Order) (string, error) {
+	res, err := repository.store.Collection(collectionName).InsertOne(context.Background(), order)
+	if err != nil {
+		return "", err
 	}
-	return order, nil
+
+	id, ok := res.InsertedID.(primitive.ObjectID)
+	if !ok {
+		return "", fmt.Errorf("result id is not the ObjectID type")
+	}
+
+	return id.String(), nil
 }
 
 func (repository *OrderRepository) FindAll() ([]*model.Order, error) {
