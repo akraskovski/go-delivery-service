@@ -2,6 +2,7 @@ package apiserver
 
 import (
 	"context"
+	"github.com/akraskovski/go-delivery-service/internal/app/apiserver/config"
 	"github.com/akraskovski/go-delivery-service/internal/app/store/repository/mongo"
 	mongodriver "go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -9,22 +10,22 @@ import (
 	"time"
 )
 
-func Start(config *APIServerConfig) error {
-	db, err := connectToDB(config)
+func Start(cfg *config.Config) error {
+	db, err := connectToDB(cfg)
 	if err != nil {
 		return err
 	}
 
 	store := mongo.New(db)
 
-	server := newServer(store, config)
+	server := newServer(store)
 	server.logger.Info("Starting the API Server")
-	return http.ListenAndServe(config.BindPort, server.router)
+	return http.ListenAndServe(cfg.BindPort, server.router)
 }
 
-func connectToDB(config *APIServerConfig) (*mongodriver.Database, error) {
+func connectToDB(cfg *config.Config) (*mongodriver.Database, error) {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	client, err := mongodriver.Connect(ctx, options.Client().ApplyURI(config.DatabaseURL))
+	client, err := mongodriver.Connect(ctx, options.Client().ApplyURI(cfg.DatabaseURL))
 	if err != nil {
 		return nil, err
 	}
@@ -34,5 +35,5 @@ func connectToDB(config *APIServerConfig) (*mongodriver.Database, error) {
 		return nil, err
 	}
 
-	return client.Database(config.DatabaseName), nil
+	return client.Database(cfg.DatabaseName), nil
 }

@@ -20,27 +20,15 @@ type server struct {
 	store  store.Store
 }
 
-func newServer(store store.Store, config *APIServerConfig) *server {
+func newServer(store store.Store) *server {
 	server := server{
 		logger: logrus.New(),
 		router: mux.NewRouter(),
 		store:  store,
 	}
-
-	server.configureLogger(config)
 	server.configureRouter()
 
 	return &server
-}
-
-func (server *server) configureLogger(config *APIServerConfig) (err error) {
-	level, err := logrus.ParseLevel(config.LogLevel)
-	if err != nil {
-		return
-	}
-
-	server.logger.SetLevel(level)
-	return nil
 }
 
 func (server *server) configureRouter() {
