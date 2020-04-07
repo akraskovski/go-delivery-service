@@ -9,6 +9,7 @@ import (
 
 func (server *server) initOrderController() {
 	server.router.HandleFunc("/orders", server.handleCreateOrder()).Methods("POST")
+	server.router.HandleFunc("/orders", server.handleFindAllOrders()).Methods("GET")
 }
 
 func (server *server) handleCreateOrder() http.HandlerFunc {
@@ -37,5 +38,17 @@ func (server *server) handleCreateOrder() http.HandlerFunc {
 		}
 
 		server.respond(writer, http.StatusCreated, id)
+	}
+}
+
+func (server *server) handleFindAllOrders() http.HandlerFunc {
+	return func(writer http.ResponseWriter, request *http.Request) {
+		orders, err := server.store.Order().FindAll()
+		if err != nil {
+			server.error(writer, http.StatusInternalServerError, err)
+			return
+		}
+
+		server.respond(writer, http.StatusOK, orders)
 	}
 }
