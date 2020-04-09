@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	go build -v ./cmd/deliveryservice
+	CGO_ENABLED=0 GOOS=linux go build -o main -v ./cmd/deliveryservice
 
 .PHONY: test
 test:
