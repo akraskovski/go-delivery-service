@@ -1,6 +1,6 @@
 .PHONY: lint
 lint:
-	$(go env GOPATH)/bin/golangci-lint run
+	$(shell go env GOPATH)/bin/golangci-lint run
 
 .PHONY: build
 build:
