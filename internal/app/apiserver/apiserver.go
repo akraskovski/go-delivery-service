@@ -24,7 +24,8 @@ func Start(cfg *config.Config) error {
 }
 
 func connectToDB(cfg *config.Config) (*mongodriver.Database, error) {
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancelFunc := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancelFunc()
 	client, err := mongodriver.Connect(ctx, options.Client().ApplyURI(cfg.DatabaseURL))
 	if err != nil {
 		return nil, err
