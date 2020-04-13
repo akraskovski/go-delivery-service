@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+
+  mongodb:
+    image: mongo:4.2.5
+    ports:
+      - 27027:27017
+    networks:
+      - delivery-service
+    volumes:
+      - mongodb_data_container:/data/db
+
+  delivery-service:
+    build:
+      context: ../
+      dockerfile: ./build/package/Dockerfile
+    image: delivery-service:dev
+    ports:
+    - 8000:8000
+    depends_on:
+      - mongodb
+    restart: on-failure
+    networks:
+      - delivery-service
+
+volumes:
+  mongodb_data_container:
+
+networks:
+  delivery-service:
