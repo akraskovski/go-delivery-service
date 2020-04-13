@@ -25,6 +25,4 @@ jobs:
         run: make lint
 
       - name: "Run build"
-        uses: cedrickring/golang-action/go1.14@1.5.2
-        with:
-          args: make build
+        run: make build
