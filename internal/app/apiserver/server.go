@@ -20,14 +20,14 @@ type server struct {
 }
 
 func newServer(store store.Store) *server {
-	server := server{
+	server := &server{
 		logger: logrus.New(),
 		router: mux.NewRouter(),
 		store:  store,
 	}
 	server.configureRouter()
 
-	return &server
+	return server
 }
 
 func (server *server) configureRouter() {
